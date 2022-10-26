@@ -29,6 +29,8 @@ jobs:
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
       - name: Build Android on EAS
+        run: echo ${{github.event.inputs.platform}}
+      - name: Build Android on EAS
         if: github.event.inputs.platform == 'android'
         run: echo github.event.inputs.platform
       - name: Build Android on EAS
