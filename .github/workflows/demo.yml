@@ -17,8 +17,8 @@ on:
         default: 'no'
         type: choice
         options:
-          - yes
-          - no
+          - 'yes'
+          - 'no'
 
 jobs:
   build:
@@ -28,11 +28,19 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
-      - name: Build Android on EAS
-        run: echo ${{github.event.inputs.platform}}
-      - name: Build Android on EAS
+      - name: aaaa
+        run: echo ${{ github.event.inputs.platform }}
+      - name: aaaa
+        run: echo ${{ github.event.inputs.submit }}
+      - name: Builasdasdasdasdsads
         if: github.event.inputs.platform == 'android'
+        run: echo github.event.inputs.platform
+      - name: Builasdasdasdasdsads
+        if: github.event.inputs.platform != 'android'
         run: echo github.event.inputs.platform
       - name: Build Android on EAS
         if: github.event.inputs.submit == 'yes'
+        run: echo github.event.inputs.submit
+      - name: Build Android on EAS
+        if: github.event.inputs.submit != 'yes'
         run: echo github.event.inputs.submit
