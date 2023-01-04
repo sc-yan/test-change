@@ -2,14 +2,6 @@ name: Release TAG
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to release to. If branch is set to hotfix, it releases a hotfix to production'
-        required: true
-        type: choice
-        options:
-          - canary
-          - production
 
 jobs:
   create-tag:
