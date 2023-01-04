@@ -1,0 +1,25 @@
+name: Release TAG
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to release to. If branch is set to hotfix, it releases a hotfix to production'
+        required: true
+        type: choice
+        options:
+          - canary
+          - production
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: rickstaa/action-create-tag@v1
+        with:
+          tag: test1
+          message: msg1
+          #commit_sha: ${{ steps.next_tag.outputs.commit_sha }}
