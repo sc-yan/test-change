@@ -12,5 +12,7 @@ jobs:
           fetch-depth: 0
       - name: push a tag
         run: |
-          git tag 2021.10.0
-          git push origin 2021.10.0
+          echo ${{ github.sha }}
+          git checkout 222
+          echo "----------"
+          echo ${{ github.sha }}
