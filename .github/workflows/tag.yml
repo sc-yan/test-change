@@ -20,6 +20,6 @@ jobs:
           fetch-depth: 0
       - uses: rickstaa/action-create-tag@v1
         with:
-          tag: test1
+          tag: 2021.10.0
           message: msg1
           #commit_sha: ${{ steps.next_tag.outputs.commit_sha }}
