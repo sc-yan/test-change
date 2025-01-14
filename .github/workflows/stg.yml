@@ -1,18 +1,52 @@
-name: stg Deploy
+name: tests
 
 on:
-  workflow_run:
-    workflows:
-      - CI
-    branches: [disable_ci]
-    types:
-      - completed
+  pull_request:
+  push:
+    branches:
+      - master
+      - rc
 
 jobs:
-  test-step:
-    name: output
-
+  files-changed:
+    name: Detect files changed
     runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    outputs:
+      migration: ${{ steps.changes.outputs.migration }}
     steps:
-      - name: output
-        run: echo tag111
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
+      - uses: dorny/paths-filter@v3
+        id: changes
+        with:
+          filters: |
+            migration: 
+              - 'priv/repo/**'
+              - '.github/workflows/stg.yml' # this file
+
+  test:
+    if:  startsWith(github.base_ref, 'rc') || startsWith(github.base_ref, 'production') || needs.files-changed.outputs.migration == 'true'
+    needs: files-changed
+    name: Com Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: print event name and base_ref and head_ref
+        run: |
+          echo ${{ github.event_name }}
+          echo ${{ github.base_ref }}
+          echo ${{ github.head_ref }}
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
+      - name: Only apply changes to migration scripts
+        run: |
+          git fetch origin ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
+          git checkout ${{ github.base_ref }}
+          git diff ${{ github.base_ref }}...${{ github.head_ref }} | git apply -v --index --include='priv/**'
