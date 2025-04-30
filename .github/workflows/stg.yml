@@ -3,7 +3,7 @@ name: tests
 on:
   pull_request:
     branches:
-      - master
+      - master #test
       - rc
 
 jobs:
