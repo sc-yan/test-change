@@ -3,7 +3,7 @@ name: tests
 on:
   pull_request:
     branches:
-      - master #test commit1
+      - master #test commit1 commit 2
       - rc
 
 jobs:
