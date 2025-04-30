@@ -3,7 +3,7 @@ name: tests
 on:
   pull_request:
     branches:
-      - master #test this is on test branch
+      - master #test this is not tst branch anymore. edit it on top of test btanch
       - rc
 
 jobs:
